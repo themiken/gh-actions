@@ -1,7 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+	"os/user"
+)
 
 func main() {
-	fmt.Println("Hello World")
+
+	currentUser, err := user.Current()
+	if err != nil {
+		log.Fatalf(err.Error())
+	}
+
+	fmt.Println("Hello, " + currentUser.Username + "!")
 }
