@@ -1,0 +1,17 @@
+name: triggers
+run-name: Golang triggers!
+on:
+  workflow_dispatch:
+    inputs:
+      user-name:
+        description: 'User Name'
+        required: true
+        default: 'John Doe'
+        type: string
+jobs:
+  hello-user:
+    runs-on: ubuntu-latest
+    steps:
+      - name: hello-user
+        run: |
+          echo "Hello ${{ github.event.inputs.user-name }}!"
