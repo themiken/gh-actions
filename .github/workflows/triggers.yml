@@ -8,10 +8,44 @@ on:
         required: true
         default: 'John Doe'
         type: string
+  push:
+    branches:
+      - main
+  issues:
+    types: [opened]
 jobs:
   hello-user:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
       - name: hello-user
         run: |
           echo "Hello ${{ github.event.inputs.user-name }}!"
+  print_quote:
+    if: ${{ github.event_name == 'push'}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: get_motivational_quote
+        uses: JamesIves/fetch-api-data-action@v2
+        with:
+          endpoint: https://type.fit/api/quotes
+      - name : get_latest_quote
+        run: |
+          cat fetch-api-data-action/data.json | jq -r '.[0].text'
+
+  comment_issue:
+    if: ${{ github.event_name == 'issues' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: comment_issue
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `Hello ${context.payload.sender.login}!`
+            })
+    
