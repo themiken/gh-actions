@@ -34,13 +34,32 @@ on:
           - Xigua
           - Yellow
           - Zucchini
+      
+       
 jobs:
   test:
     runs-on: ubuntu-latest
-    steps:    
-      - name: Test
-        run: |
-          echo ${{ github.event.inputs.fruits }}
+    env:
+        citric: ${{ contains(github.event.inputs.fruits, 'Lemon') || contains(github.event.inputs.fruits, 'Mango')}}
+        drupa: ("Cherry", "Nectarine", "Mango")
+    steps: 
+        - name: Citric fruits
+          if: ${{ env.citric == true }}
+          run: |
+            echo "There are citrus fruits in the list"
+        - name: Non-citric fruits
+          if: ${{ env.citric == false }}
+          run: |
+            echo "There are no citrus fruits in the list"
+        - name: Drupes
+          if: ${{ contains(env.drupa, github.event.inputs.fruits) }}
+          run: |
+            echo "There are drupes in the list"
+        - name: Non-drupes
+          if: ${{ !contains(env.drupa, github.event.inputs.fruits) }}
+          run: |
+                echo "There are no drupes in the list"
+       
 
 
           
