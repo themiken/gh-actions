@@ -1,0 +1,46 @@
+name: expressions
+run-name: Testing GitHub Expressions
+on:
+  workflow_dispatch:
+    inputs:
+      fruits:
+        description: 'Select the fruit that you like'
+        required: true
+        default: Apple
+        type: choice
+        options:
+          - Apple
+          - Banana
+          - Cherry
+          - Durian
+          - Elderberry
+          - Fig
+          - Grape
+          - Honeydew
+          - Jackfruit
+          - Kiwi
+          - Lemon
+          - Mango
+          - Nectarine
+          - Orange
+          - Papaya
+          - Quince
+          - Raspberry
+          - Strawberry
+          - Tomato
+          - Ugli
+          - Vanilla
+          - Watermelon
+          - Xigua
+          - Yellow
+          - Zucchini
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:    
+      - name: Test
+        run: |
+          echo ${{ github.event.inputs.fruits }}
+
+
+          
