@@ -16,29 +16,30 @@ jobs:
     github_context:
         runs-on: ubuntu-latest
         steps:
-            - name: hello
+            - name: github
               run: echo "Hi ${{ github.actor }} you are working on ${{ github.repository }}, in the branch ${{ github.ref }} triggerred by a ${{ github.event_name}}"  
 
     runner_context:
         runs-on: ubuntu-latest
         steps:
-          - name: hello
-            run: echo "Hi ${{ runner.os }} runner, you are running on ${{ runner.arch }} architecture" >> $GITHUB_OUTPUT
+          - name: runner
+            run: echo "Hi ${{ runner.os }} runner, you are running on ${{ runner.arch }} architecture"
 
     env_context:
         runs-on: ubuntu-latest
         steps:
-          - name: hello
+          - name: env
             run: echo "Today is ${{ env.DAY }}"
     
     step_context:
       runs-on: ubuntu-latest
       steps:
         - name: hello
-          run: echo "My name is ${{ github.actor }}" >> $GITHUB_OUTPUT
+          id: hello
+          run: echo "My name is ${{ github.actor }}" >> "$GITHUB_OUTPUT"
 
         - name: output
-          run: echo "Output ${{ steps.hello.outputs }}"
+          run: echo "Output ${{ steps.hello.outputs.result }}"
         
     
     
