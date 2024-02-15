@@ -11,6 +11,7 @@ on:
 
 env:
   DAY: Wednesday
+  GITHUB_OUTPUT: lol
 
 jobs:
     github_context:
@@ -36,7 +37,7 @@ jobs:
       steps:
         - name: hello
           id: hello
-          run: echo "My name is ${{ github.actor }}" >> "$GITHUB_OUTPUT"
+          run: echo "result=$(echo My name is ${{ github.actor }})" >> "$GITHUB_OUTPUT"
 
         - name: output
           run: echo "Output ${{ steps.hello.outputs.result }}"
