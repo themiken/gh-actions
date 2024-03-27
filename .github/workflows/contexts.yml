@@ -10,10 +10,14 @@ on:
       - main
 
 env:
-  DAY: Wednesday
-  GITHUB_OUTPUT: lol
+  DAY: Wednesday  
 
 jobs:
+    print_branchs:
+        runs-on: ubuntu-latest
+        steps:
+            - name: print_branchs
+              run: echo "Branches ${{ github.head_ref }} - ${{ github.base_ref }} - ${{ github.ref }}"
     github_context:
         runs-on: ubuntu-latest
         steps:
@@ -41,6 +45,9 @@ jobs:
 
         - name: output
           run: echo "Output ${{ steps.hello.outputs.result }}"
+
+        - name: display_secret
+          run: echo "Token ${{ secrets.TOKEN }}"
         
     
     
